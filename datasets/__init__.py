@@ -7,3 +7,4 @@ from miniboone import MINIBOONE
 from bsds300 import BSDS300
 from mnist import MNIST
 from cifar10 import CIFAR10
+from seds import SED
