@@ -226,16 +226,47 @@ def run_experiments_cifar10():
         ex.train_maf_on_made_cond([n_hiddens]*2, act_fun, n_layers, n_comps, mode)
 
 
+def run_experiments_seds():
+
+    n_layers = 5
+    n_comps = 10
+    act_fun = 'relu'
+    mode = 'random'
+
+    ex.load_data('cifar10')
+
+    for n_hiddens in [1024, 2048]:
+
+        ex.train_made_cond([n_hiddens]*1, act_fun, mode)
+        ex.train_made_cond([n_hiddens]*2, act_fun, mode)
+
+        ex.train_mog_made_cond([n_hiddens]*1, act_fun, n_comps, mode)
+        ex.train_mog_made_cond([n_hiddens]*2, act_fun, n_comps, mode)
+
+        for i in [1, 2]:
+
+            ex.train_realnvp_cond([n_hiddens]*1, 'tanh', 'relu', n_layers*i)
+            ex.train_realnvp_cond([n_hiddens]*2, 'tanh', 'relu', n_layers*i)
+
+            ex.train_maf_cond([n_hiddens]*1, act_fun, n_layers*i, mode)
+            ex.train_maf_cond([n_hiddens]*2, act_fun, n_layers*i, mode)
+
+        ex.train_maf_on_made_cond([n_hiddens]*1, act_fun, n_layers, n_comps, mode)
+        ex.train_maf_on_made_cond([n_hiddens]*2, act_fun, n_layers, n_comps, mode)
+
+
+
 def main():
 
     methods = dict()
-    methods['power'] = run_experiments_power
-    methods['gas'] = run_experiments_gas
-    methods['hepmass'] = run_experiments_hepmass
-    methods['miniboone'] = run_experiments_miniboone
-    methods['bsds300'] = run_experiments_bsds300
-    methods['mnist'] = run_experiments_mnist
-    methods['cifar10'] = run_experiments_cifar10
+    #methods['power'] = run_experiments_power
+    #methods['gas'] = run_experiments_gas
+    #methods['hepmass'] = run_experiments_hepmass
+    #methods['miniboone'] = run_experiments_miniboone
+    #methods['bsds300'] = run_experiments_bsds300
+    #methods['mnist'] = run_experiments_mnist
+    #methods['cifar10'] = run_experiments_cifar10
+    methods['seds'] = run_experiments_seds
 
     for name in sys.argv[1:]:
         methods[name]()

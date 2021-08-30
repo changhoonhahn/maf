@@ -74,6 +74,10 @@ def load_data(name):
     elif name == 'miniboone':
         data = datasets.MINIBOONE()
         data_name = name
+    
+    elif name == 'seds':
+        data = datasets.SED()
+        data_name = name
 
     else:
         raise ValueError('Unknown dataset')
