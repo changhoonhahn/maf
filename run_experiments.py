@@ -233,7 +233,7 @@ def run_experiments_seds():
     act_fun = 'relu'
     mode = 'random'
 
-    ex.load_data('cifar10')
+    ex.load_data('seds')
 
     for n_hiddens in [1024, 2048]:
 

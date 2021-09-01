@@ -1,4 +1,4 @@
-import pandas as pd
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -19,7 +19,7 @@ class SED:
     def __init__(self):
         
         # load in training + validation + test data 
-        x_trn, y_trn, x_val, y_val, x_tst, x_tst = load_data()
+        x_trn, y_trn, x_val, y_val, x_tst, y_tst = load_data()
 
         self.trn = self.Data(x_trn, y_trn)
         self.val = self.Data(x_val, y_val)
@@ -32,7 +32,7 @@ class SED:
 def load_data():
     version = '0.0'
     dat_dir = "/tigress/chhahn/arcoiris/sedflow/"
-    if not os.path.isdif(dat_dir): 
+    if not os.path.isdir(dat_dir): 
         dat_dir = "/Users/chahah/data/arcoiris/sedflow/"
 
     props, mags, sigs, zreds = [], [], [], []
@@ -77,6 +77,6 @@ def load_data():
         _zred = np.load(os.path.join(dat_dir, 
             'train.v%s.%i.redshifts.prune_cnf.npy' % (version, seed)))
     data_x_test = _prop
-    data_y_test = np.concatenate([_mags, _sigs, np.atleast_2d(_zreds).T], axis=1)
+    data_y_test = np.concatenate([_mags, _sigs, np.atleast_2d(_zred).T], axis=1)
 
-    return data_x_train, data_y_train, data_x_valid, data_y_valid, data_x_test, data_x_test
+    return data_x_train, data_y_train, data_x_valid, data_y_valid, data_x_test, data_y_test
